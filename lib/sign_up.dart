@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groceries_app/login.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpWidgetState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpWidgetState extends State<SignUp> {
+class _SignUpPageState extends State<SignUpPage> {
   bool showPassword = false;
   TextEditingController _emailController = new TextEditingController();
   TextEditingController _passwordController = new TextEditingController();
@@ -19,11 +19,11 @@ class _SignUpWidgetState extends State<SignUp> {
     return Scaffold(
       body: Container(
         constraints: const BoxConstraints.expand(),
-        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 50),
+        padding: const EdgeInsets.only(left: 26, right: 26, bottom: 50),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('lib/assets/images/backgroundImage.png'),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: Column(
@@ -36,7 +36,7 @@ class _SignUpWidgetState extends State<SignUp> {
                 child: SizedBox(
                   width: 47.84,
                   height: 55.64,
-                  child: Image.asset('lib/assets/images/carrot.png'),
+                  child: Image.asset('lib/assets/images/logo.png'),
                 ),
               ),
             ),
@@ -247,6 +247,9 @@ class _SignUpWidgetState extends State<SignUp> {
   }
 
   void signInButtonPressed() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
   }
 }

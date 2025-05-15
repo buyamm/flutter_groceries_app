@@ -16,7 +16,7 @@ class _ProductDetailState extends State<ProductDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF2F3F2),
+        backgroundColor: Color(0xFFF2F3F2),
         elevation: 0,
         automaticallyImplyLeading: false,
         flexibleSpace: SafeArea(
@@ -26,53 +26,56 @@ class _ProductDetailState extends State<ProductDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new),
                   onPressed: () {
                     Navigator.pop(context);
                   },
+                  icon: Icon(Icons.arrow_back_ios),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.file_upload_outlined),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed: () {},
+                  icon: Icon(Icons.file_upload_outlined),
                 ),
               ],
             ),
           ),
         ),
       ),
-      body: Stack(
+      body: Column(
         children: [
-          Container(
-            height: 300,
-            decoration: const BoxDecoration(
-              color: Color(0xFFF2F3F2),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
+          Stack(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 300,
+                child: Image.asset(
+                  "lib/assets/images/backgroundProduct.png",
+                  fit: BoxFit.fill,
+                ),
               ),
-              border: Border(
-                bottom: BorderSide(color: Colors.black12, width: 1),
+              Positioned(
+                top: (300 - 200) / 2,
+                left: (MediaQuery.of(context).size.width - 320) / 2,
+                child: SizedBox(
+                  width: 320,
+                  height: 200,
+                  child: Image.asset(
+                    "lib/assets/images/apple.png",
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
-            ),
-            child: Image.asset(
-              'lib/assets/images/apple.png',
-              fit: BoxFit.contain,
-              height: 300,
-            ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.all(18.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Naturel Red Apple',
+                    Text(
+                      "Naturel Red Apple",
                       style: TextStyle(
                         fontSize: 26,
                         color: Colors.black,
@@ -80,16 +83,16 @@ class _ProductDetailState extends State<ProductDetail> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () => {favouriteHandle()},
+                      onPressed: favouriteHandle,
                       icon:
                           _favourite
                               ? Icon(
-                                Icons.favorite_border_rounded,
+                                Icons.favorite_border_outlined,
                                 size: 30,
                                 color: Colors.red,
                               )
                               : Icon(
-                                Icons.favorite_border_rounded,
+                                Icons.favorite_border_outlined,
                                 size: 30,
                                 color: Colors.black54,
                               ),
@@ -97,9 +100,9 @@ class _ProductDetailState extends State<ProductDetail> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
+                  padding: const EdgeInsets.only(bottom: 20),
                   child: Text(
-                    '1kg, Price',
+                    "1kg, Price",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black54,
@@ -107,79 +110,85 @@ class _ProductDetailState extends State<ProductDetail> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () => {decreaseProductHandle()},
-                          icon:
-                              (_currentValue > _minValue)
-                                  ? Icon(
-                                    Icons.remove,
-                                    size: 30,
-                                    color: Color(0xFF53B175),
-                                  )
-                                  : Icon(
-                                    Icons.remove,
-                                    size: 30,
-                                    color: Colors.black54,
-                                  ),
-                        ),
-                        Container(
-                          width: 50,
-                          height: 50,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Colors.black12, width: 1),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: decreaseProductHandle,
+                            icon:
+                                (_currentValue > _minValue)
+                                    ? Icon(
+                                      Icons.remove,
+                                      size: 30,
+                                      color: Color(0xFF53B175),
+                                    )
+                                    : Icon(
+                                      Icons.remove,
+                                      size: 30,
+                                      color: Colors.black54,
+                                    ),
                           ),
-                          child: Text(
-                            _currentValue.toString(),
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.black12,
+                                width: 1,
+                              ),
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              _currentValue.toString(),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        IconButton(
-                          onPressed: () => {increaseProductHandle()},
-                          icon:
-                              (_currentValue < _maxValue)
-                                  ? Icon(
-                                    Icons.add,
-                                    size: 30,
-                                    color: Color(0xFF53B175),
-                                  )
-                                  : Icon(
-                                    Icons.add,
-                                    size: 30,
-                                    color: Colors.black54,
-                                  ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '\$ 4.99',
-                      style: TextStyle(
-                        fontSize: 26,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                          IconButton(
+                            onPressed: increaseProductHandle,
+                            icon:
+                                (_currentValue < _maxValue)
+                                    ? Icon(
+                                      Icons.add,
+                                      size: 30,
+                                      color: Color(0xFF53B175),
+                                    )
+                                    : Icon(
+                                      Icons.add,
+                                      size: 30,
+                                      color: Colors.black54,
+                                    ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      Text(
+                        "\$4.99",
+                        style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: EdgeInsets.only(top: 10, bottom: 0),
                   child: Divider(color: Colors.black12, thickness: 1),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Product Detail',
+                      "Product Detail",
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
@@ -188,7 +197,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     ),
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.keyboard_arrow_down),
+                      icon: Icon(Icons.keyboard_arrow_down, size: 30),
                     ),
                   ],
                 ),
@@ -197,7 +206,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w200),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 10.0),
                   child: Divider(color: Colors.black12, thickness: 1),
                 ),
                 Row(
@@ -214,13 +223,13 @@ class _ProductDetailState extends State<ProductDetail> {
                     Row(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(3.0),
+                          padding: EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
                             color: Colors.black12,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
-                            '100g',
+                            '100gr',
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.black,
@@ -237,7 +246,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
+                  padding: const EdgeInsets.only(top: 0.0),
                   child: Divider(color: Colors.black12, thickness: 1),
                 ),
                 Row(
@@ -267,27 +276,34 @@ class _ProductDetailState extends State<ProductDetail> {
                     ),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 67,
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF53B175),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      child: Text(
+                        "Add to Basket",
+                        style: TextStyle(
+                          height: 2,
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 40, left: 20, right: 20),
-        child: SizedBox(
-          height: 67,
-          child: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: const Color(0xFF53B175),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Text(
-              'Add to Basket',
-              style: TextStyle(height: 2, fontSize: 18, color: Colors.white),
-            ),
-          ),
-        ),
       ),
     );
   }

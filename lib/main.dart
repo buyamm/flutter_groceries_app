@@ -20,7 +20,7 @@ class _MyWidgetState extends State<MyApp> {
         fontFamily: 'Roboto', // Đặt font mặc định
         primarySwatch: Colors.blue,
       ),
-      home: Login(),
+      home: LoginPage(),
     );
   }
 }
