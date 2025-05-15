@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_groceries_app/home.dart';
 import 'package:flutter_groceries_app/login.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class _MyWidgetState extends State<MyApp> {
         fontFamily: 'Roboto', // Đặt font mặc định
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: HomePage(),
     );
   }
 }
