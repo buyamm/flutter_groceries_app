@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groceries_app/explore.dart';
+import 'package:flutter_groceries_app/product_detail.dart';
 import 'package:flutter_groceries_app/profile.dart';
 import 'package:standard_searchbar/old/standard_searchbar.dart';
 
@@ -208,88 +209,100 @@ class _HomePageState extends State<HomePage> {
                               itemCount: productsExclusiveOffer.length,
                               itemBuilder: (context, index) {
                                 final product = productsExclusiveOffer[index];
-                                return Container(
-                                  margin: const EdgeInsets.only(
-                                    right: 12,
-                                  ), // Khoảng cách giữa các item
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black54,
+                                return GestureDetector(
+                                  onTap:
+                                      () => {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => ProductDetail(),
+                                          ),
+                                        ),
+                                      },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      right: 12,
+                                    ), // Khoảng cách giữa các item
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.black54,
+                                      ),
                                     ),
-                                  ),
-                                  width: 170,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: SizedBox(
-                                            width: 90,
-                                            height: 80,
-                                            child: Image.asset(
-                                              product["image"],
+                                    width: 170,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: SizedBox(
+                                              width: 90,
+                                              height: 80,
+                                              child: Image.asset(
+                                                product["image"],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            bottom: 2.0,
-                                            top: 4,
-                                          ),
-                                          child: Text(
-                                            product["name"],
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 2.0,
+                                              top: 4,
                                             ),
-                                          ),
-                                        ),
-                                        Text(
-                                          product["unit"],
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "\$${product["price"].toStringAsFixed(2)}",
+                                            child: Text(
+                                              product["name"],
                                               style: const TextStyle(
-                                                fontSize: 24,
-                                                color: Colors.black,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold,
+                                                color: Colors.black,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 46,
-                                              height: 46,
-                                              child: FloatingActionButton(
-                                                onPressed: () {},
-                                                backgroundColor: const Color(
-                                                  0xFF53B175,
-                                                ),
-                                                elevation: 0, // do bong'
-                                                child: const Icon(
-                                                  Icons.add,
-                                                  size: 26,
-                                                  color: Colors.white,
+                                          ),
+                                          Text(
+                                            product["unit"],
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "\$${product["price"].toStringAsFixed(2)}",
+                                                style: const TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                              SizedBox(
+                                                width: 46,
+                                                height: 46,
+                                                child: FloatingActionButton(
+                                                  onPressed: () {},
+                                                  backgroundColor: const Color(
+                                                    0xFF53B175,
+                                                  ),
+                                                  elevation: 0, // do bong'
+                                                  child: const Icon(
+                                                    Icons.add,
+                                                    size: 26,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
@@ -334,88 +347,100 @@ class _HomePageState extends State<HomePage> {
                               itemCount: productsBestSelling.length,
                               itemBuilder: (context, index) {
                                 final product = productsBestSelling[index];
-                                return Container(
-                                  margin: const EdgeInsets.only(
-                                    right: 12,
-                                  ), // Khoảng cách giữa các item
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black54,
+                                return GestureDetector(
+                                  onTap:
+                                      () => {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => ProductDetail(),
+                                          ),
+                                        ),
+                                      },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      right: 12,
+                                    ), // Khoảng cách giữa các item
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.black54,
+                                      ),
                                     ),
-                                  ),
-                                  width: 170,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: SizedBox(
-                                            width: 90,
-                                            height: 80,
-                                            child: Image.asset(
-                                              product["image"],
+                                    width: 170,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: SizedBox(
+                                              width: 90,
+                                              height: 80,
+                                              child: Image.asset(
+                                                product["image"],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            bottom: 2.0,
-                                            top: 4,
-                                          ),
-                                          child: Text(
-                                            product["name"],
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 2.0,
+                                              top: 4,
                                             ),
-                                          ),
-                                        ),
-                                        Text(
-                                          product["unit"],
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "\$${product["price"].toStringAsFixed(2)}",
+                                            child: Text(
+                                              product["name"],
                                               style: const TextStyle(
-                                                fontSize: 24,
-                                                color: Colors.black,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold,
+                                                color: Colors.black,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 46,
-                                              height: 46,
-                                              child: FloatingActionButton(
-                                                onPressed: () {},
-                                                backgroundColor: const Color(
-                                                  0xFF53B175,
-                                                ),
-                                                elevation: 0, // do bong'
-                                                child: const Icon(
-                                                  Icons.add,
-                                                  size: 26,
-                                                  color: Colors.white,
+                                          ),
+                                          Text(
+                                            product["unit"],
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "\$${product["price"].toStringAsFixed(2)}",
+                                                style: const TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                              SizedBox(
+                                                width: 46,
+                                                height: 46,
+                                                child: FloatingActionButton(
+                                                  onPressed: () {},
+                                                  backgroundColor: const Color(
+                                                    0xFF53B175,
+                                                  ),
+                                                  elevation: 0, // do bong'
+                                                  child: const Icon(
+                                                    Icons.add,
+                                                    size: 26,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
@@ -508,88 +533,100 @@ class _HomePageState extends State<HomePage> {
                               itemCount: productsGroceries.length,
                               itemBuilder: (context, index) {
                                 final product = productsGroceries[index];
-                                return Container(
-                                  margin: const EdgeInsets.only(
-                                    right: 12,
-                                  ), // Khoảng cách giữa các item
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    border: Border.all(
-                                      width: 1,
-                                      color: Colors.black54,
+                                return GestureDetector(
+                                  onTap:
+                                      () => {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => ProductDetail(),
+                                          ),
+                                        ),
+                                      },
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      right: 12,
+                                    ), // Khoảng cách giữa các item
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Colors.black54,
+                                      ),
                                     ),
-                                  ),
-                                  width: 170,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.center,
-                                          child: SizedBox(
-                                            width: 90,
-                                            height: 80,
-                                            child: Image.asset(
-                                              product["image"],
+                                    width: 170,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.center,
+                                            child: SizedBox(
+                                              width: 90,
+                                              height: 80,
+                                              child: Image.asset(
+                                                product["image"],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            bottom: 2.0,
-                                            top: 4,
-                                          ),
-                                          child: Text(
-                                            product["name"],
-                                            style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 2.0,
+                                              top: 4,
                                             ),
-                                          ),
-                                        ),
-                                        Text(
-                                          product["unit"],
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                        const Spacer(),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "\$${product["price"].toStringAsFixed(2)}",
+                                            child: Text(
+                                              product["name"],
                                               style: const TextStyle(
-                                                fontSize: 24,
-                                                color: Colors.black,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.bold,
+                                                color: Colors.black,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 46,
-                                              height: 46,
-                                              child: FloatingActionButton(
-                                                onPressed: () {},
-                                                backgroundColor: const Color(
-                                                  0xFF53B175,
-                                                ),
-                                                elevation: 0, // do bong'
-                                                child: const Icon(
-                                                  Icons.add,
-                                                  size: 26,
-                                                  color: Colors.white,
+                                          ),
+                                          Text(
+                                            product["unit"],
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "\$${product["price"].toStringAsFixed(2)}",
+                                                style: const TextStyle(
+                                                  fontSize: 24,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                              SizedBox(
+                                                width: 46,
+                                                height: 46,
+                                                child: FloatingActionButton(
+                                                  onPressed: () {},
+                                                  backgroundColor: const Color(
+                                                    0xFF53B175,
+                                                  ),
+                                                  elevation: 0, // do bong'
+                                                  child: const Icon(
+                                                    Icons.add,
+                                                    size: 26,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );
