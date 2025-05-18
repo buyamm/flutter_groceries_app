@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_groceries_app/product_detail.dart';
-import 'package:flutter_groceries_app/sign_up.dart';
+import 'package:flutter_groceries_app/screens/product_detail.dart';
+import 'package:flutter_groceries_app/screens/sign_up.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

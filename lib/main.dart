@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_groceries_app/home.dart';
-import 'package:flutter_groceries_app/login.dart';
+import 'package:flutter_groceries_app/screens/home.dart';
+import 'package:flutter_groceries_app/screens/login.dart';
 
 void main() {
   runApp(const MyApp());
