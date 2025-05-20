@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_groceries_app/data/product_data.dart';
 import 'package:flutter_groceries_app/screens/explore.dart';
 import 'package:flutter_groceries_app/screens/profile.dart';
-import 'package:flutter_groceries_app/widgets/product_category.dart';
+import 'package:flutter_groceries_app/widgets/bottom_bar.dart';
+import 'package:flutter_groceries_app/widgets/product_card.dart';
 import 'package:standard_searchbar/old/standard_searchbar.dart';
 
 class HomePage extends StatefulWidget {
@@ -109,45 +110,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.shop), label: "Shop"),
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: "Explore"),
-          BottomNavigationBarItem(icon: Icon(Icons.card_travel), label: "Cart"),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: "Favorite",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_balance),
-            label: "Account",
-          ),
-        ],
-        currentIndex: _currentSelectedIndex,
-        selectedItemColor: Color(0xff53B175),
-        elevation: 3,
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        onTap: (value) => onTapSelectedItem(value),
-      ),
     );
-  }
-
-  void onTapSelectedItem(int index) {
-    setState(() {
-      _currentSelectedIndex = index;
-    });
-
-    if (_currentSelectedIndex == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ExplorePage()),
-      );
-    } else if (_currentSelectedIndex == 4) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProfilePage()),
-      );
-    }
   }
 }
