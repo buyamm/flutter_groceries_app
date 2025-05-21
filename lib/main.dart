@@ -19,7 +19,13 @@ class MyApp extends StatefulWidget {
 class _MyWidgetState extends State<MyApp> {
   int _currentSelectedIndex = 0;
 
-  final List<Widget> _pages = [HomePage(), ExplorePage(), ProfilePage()];
+  final List<Widget> _pages = [
+    HomePage(),
+    ExplorePage(),
+    Placeholder(),
+    Placeholder(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
