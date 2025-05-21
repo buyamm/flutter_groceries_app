@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_groceries_app/data/product_data.dart';
-import 'package:flutter_groceries_app/screens/explore.dart';
-import 'package:flutter_groceries_app/screens/profile.dart';
-import 'package:flutter_groceries_app/widgets/bottom_bar.dart';
 import 'package:flutter_groceries_app/widgets/product_card.dart';
-import 'package:standard_searchbar/old/standard_searchbar.dart';
+import 'package:flutter_groceries_app/widgets/search_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _currentSelectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,18 +55,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0, bottom: 10),
-                child: StandardSearchBar(
-                  hintText: 'Search Store',
-                  backgroundColor: Color(0xFFF2F3F2),
-                  startIconSize: 30,
-                  startIconColor: Colors.black,
-                  onChanged: (value) {
-                    // Handle search input change
-                  },
-                  onSubmitted: (value) {
-                    // Handle search submission
-                  },
-                ),
+                child: MySearchBar(),
               ),
               Expanded(
                 child: ListView(

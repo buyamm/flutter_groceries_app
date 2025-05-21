@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_groceries_app/screens/explore.dart';
-import 'package:flutter_groceries_app/screens/profile.dart';
 
 class BottomBar extends StatelessWidget {
   final int currentSelectedIndex;
