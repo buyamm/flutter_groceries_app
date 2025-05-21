@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_groceries_app/product_detail.dart';
-import 'package:flutter_groceries_app/sign_up.dart';
+import 'package:flutter_groceries_app/screens/product_detail.dart';
+import 'package:flutter_groceries_app/screens/sign_up.dart';
+import 'package:flutter_groceries_app/widgets/elevated_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -132,17 +133,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
-                    onPressed: loginEvent,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff53B175),
-                      foregroundColor: Color(0xffFFF9FF),
-                      fixedSize: Size(364, 67),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                      ),
-                    ),
-                    child: Text("Log In", style: TextStyle(fontSize: 18)),
+                  MyElevatedButton(
+                    name: "Log In",
+                    bgColor: 0xff53B175,
+                    foreColor: 0xffFFF9FF,
                   ),
                 ],
               ),
