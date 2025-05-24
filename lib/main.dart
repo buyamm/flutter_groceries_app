@@ -3,6 +3,7 @@ import 'package:flutter_groceries_app/screens/explore.dart';
 import 'package:flutter_groceries_app/screens/home.dart';
 import 'package:flutter_groceries_app/screens/login.dart';
 import 'package:flutter_groceries_app/screens/profile.dart';
+import 'package:flutter_groceries_app/screens/sign_up.dart';
 import 'package:flutter_groceries_app/widgets/bottom_bar.dart';
 
 void main() {
@@ -22,8 +23,8 @@ class _MyWidgetState extends State<MyApp> {
   final List<Widget> _pages = [
     HomePage(),
     ExplorePage(),
-    Placeholder(),
-    Placeholder(),
+    LoginPage(),
+    SignUpPage(),
     ProfilePage(),
   ];
 
