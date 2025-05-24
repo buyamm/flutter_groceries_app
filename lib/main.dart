@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_groceries_app/cubit/login_cubit.dart';
 import 'package:flutter_groceries_app/screens/explore.dart';
 import 'package:flutter_groceries_app/screens/home.dart';
 import 'package:flutter_groceries_app/screens/login.dart';
@@ -23,7 +25,7 @@ class _MyWidgetState extends State<MyApp> {
   final List<Widget> _pages = [
     HomePage(),
     ExplorePage(),
-    LoginPage(),
+    BlocProvider(create: (_) => LoginCubit(), child: LoginPage()),
     SignUpPage(),
     ProfilePage(),
   ];
@@ -31,6 +33,7 @@ class _MyWidgetState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Roboto', // Đặt font mặc định
         primarySwatch: Colors.blue,
