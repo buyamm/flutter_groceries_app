@@ -268,43 +268,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  void loginEvent() {
-    setState(() {
-      _emailInvalid = false;
-      _passwordInvalid = false;
-    });
-    final email = _emailController.text;
-    final regexEmail = RegExp(r'^[\w\.-]{2,}@gmail\.com$');
-
-    if (email.isNotEmpty && regexEmail.hasMatch(email)) {
-      setState(() {
-        _emailInvalid = false;
-      });
-    } else {
-      setState(() {
-        _emailInvalid = true;
-      });
-    }
-
-    final password = _passwordController.text;
-    final regexPassword = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$');
-
-    if (regexPassword.hasMatch(password)) {
-      setState(() {
-        _passwordInvalid = false;
-      });
-    } else {
-      setState(() {
-        _passwordInvalid = true;
-      });
-    }
-
-    if (!_emailInvalid && !_passwordInvalid) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProductDetail()),
-      );
-    }
-  }
 }

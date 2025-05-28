@@ -89,19 +89,19 @@ class _HomePageState extends State<HomePage> {
 
                         ProductCategory(
                           title: "Exclusive Offer",
-                          products: productsExclusiveOffer,
+                          products: state.exclusiveOffers,
                           haveSubCard: false,
                         ),
                         ProductCategory(
                           title: "Best Selling",
-                          products: productsBestSelling,
+                          products: state.bestSelling,
                           haveSubCard: false,
                         ),
                         ProductCategory(
                           title: "Groceries",
-                          products: productsGroceries,
+                          products: state.groceries,
                           haveSubCard: true,
-                          typeOfCategory: typeOfGroceries,
+                          typeOfCategory: state.groceryTypes,
                         ),
                       ],
                     ),
