@@ -8,8 +8,8 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
-  int _minValue = 1;
-  int _maxValue = 5;
+  final int _minValue = 1;
+  final int _maxValue = 5;
   int _currentValue = 1;
   bool _favourite = false;
   @override

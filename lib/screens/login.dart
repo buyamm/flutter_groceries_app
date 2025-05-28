@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_groceries_app/cubit/login_cubit.dart';
-import 'package:flutter_groceries_app/cubit/login_state.dart';
+import 'package:flutter_groceries_app/states/login_state.dart';
 import 'package:flutter_groceries_app/screens/home.dart';
 import 'package:flutter_groceries_app/screens/product_detail.dart';
 import 'package:flutter_groceries_app/screens/sign_up.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final VoidCallback onLoginSuccess;
+
+  const LoginPage({super.key, required this.onLoginSuccess});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -15,14 +17,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool showPassword = false;
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   var _emailInvalid = false;
   var _passwordInvalid = false;
-  var _errorEmail = "Please, enter correct email format";
-  var _errorPassword =
-      "Please, enter a password that is at least 6 characters long, contains at least 1 uppercase letter, 1 lowercase letter and 1 number";
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +34,13 @@ class _LoginPageState extends State<LoginPage> {
                 content: Text('Login failed. Please check your credentials.'),
               ),
             );
+            context.read<LoginCubit>().resetLoginStatus();
           } else if (state.loginStatus == LoginStatus.success) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => HomePage()),
-            );
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(builder: (_) => HomePage()),
+            // );
+            widget.onLoginSuccess();
           }
         },
         child: BlocBuilder<LoginCubit, LoginState>(

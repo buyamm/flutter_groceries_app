@@ -1,19 +1,23 @@
-import 'dart:ffi';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_groceries_app/states/login_state.dart';
+import 'package:flutter_groceries_app/states/signup_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
-  LoginCubit()
+class SignupCubit extends Cubit<SignupState> {
+  SignupCubit()
     : super(
-        LoginState(
+        SignupState(
+          usernameError: "",
           emailError: "",
           passwordError: "",
+          isShowPassword: false,
+          signUpStatus: SignUpStatus.initial,
           loading: false,
-          loginStatus: LoginStatus.initial,
-          // isLoginSuccess: false,
         ),
       );
+
+  bool isUsernameValid(String username) {
+    return username.length >= 6;
+  }
 
   bool isEmailValid(String email) {
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -23,10 +27,6 @@ class LoginCubit extends Cubit<LoginState> {
   bool isPasswordValid(String password) {
     return password.length >= 6;
   }
-
-  // bool isFormValid(String email, String password) {
-  //   return isEmailValid(email) && isPasswordValid(password);
-  // }
 
   void onEmailChanged(String email) {
     final checkEmailValid = isEmailValid(email);
@@ -51,21 +51,26 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  void login(String email, String password) async {
-    emit(state.copyWith(loading: true));
-    await Future.delayed(Duration(seconds: 3));
-
-    if (email == "admin@gmail.com" && password == "123456") {
-      emit(state.copyWith(loginStatus: LoginStatus.success, loading: false));
+  void onUsernameChanged(String username) {
+    final checkusernameValid = isUsernameValid(username);
+    if (!checkusernameValid) {
+      emit(
+        state.copyWith(
+          usernameError:
+              "Please enter a username that is at least 6 characters",
+        ),
+      );
     } else {
-      emit(state.copyWith(loginStatus: LoginStatus.failure, loading: false));
+      emit(state.copyWith(usernameError: ""));
     }
   }
 
-  void resetLoginStatus() {
-    emit(state.copyWith(loginStatus: LoginStatus.initial));
+  void showPassword(bool isShowPassword) {
+    emit(state.copyWith(isShowPassword: isShowPassword));
   }
 
-  bool isEnableButton(String email, String password) =>
-      isEmailValid(email) && isPasswordValid(password);
+  bool isEnableButton(String username, String email, String password) =>
+      isUsernameValid(username) &&
+      isEmailValid(email) &&
+      isPasswordValid(password);
 }

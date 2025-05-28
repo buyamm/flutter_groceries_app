@@ -20,15 +20,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyApp> {
+  bool _isLoggedIn = false;
   int _currentSelectedIndex = 0;
 
-  final List<Widget> _pages = [
-    HomePage(),
-    ExplorePage(),
-    BlocProvider(create: (_) => LoginCubit(), child: LoginPage()),
-    SignUpPage(),
-    ProfilePage(),
-  ];
+  void _handleLoginSuccess() {
+    setState(() {
+      _isLoggedIn = true;
+    });
+  }
+
+  void onTapSelectedItem(int index) {
+    setState(() {
+      _currentSelectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,19 +43,32 @@ class _MyWidgetState extends State<MyApp> {
         fontFamily: 'Roboto', // Đặt font mặc định
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body: IndexedStack(index: _currentSelectedIndex, children: _pages),
-        bottomNavigationBar: BottomBar(
-          currentSelectedIndex: _currentSelectedIndex,
-          onTap: onTapSelectedItem,
-        ),
+      home: _isLoggedIn ? _buildMainApp() : _buildLoginScreen(),
+    );
+  }
+
+  Widget _buildMainApp() {
+    final pages = [
+      HomePage(),
+      ExplorePage(),
+      Placeholder(),
+      Placeholder(),
+      ProfilePage(),
+    ];
+
+    return Scaffold(
+      body: IndexedStack(index: _currentSelectedIndex, children: pages),
+      bottomNavigationBar: BottomBar(
+        currentSelectedIndex: _currentSelectedIndex,
+        onTap: onTapSelectedItem,
       ),
     );
   }
 
-  void onTapSelectedItem(int index) {
-    setState(() {
-      _currentSelectedIndex = index;
-    });
+  Widget _buildLoginScreen() {
+    return BlocProvider(
+      create: (_) => LoginCubit(),
+      child: LoginPage(onLoginSuccess: _handleLoginSuccess),
+    );
   }
 }
