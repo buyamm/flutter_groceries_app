@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_groceries_app/cubit/cart_cubit.dart';
 import 'package:flutter_groceries_app/cubit/explore_cubit.dart';
 import 'package:flutter_groceries_app/cubit/home_cubit.dart';
 import 'package:flutter_groceries_app/cubit/login_cubit.dart';
+import 'package:flutter_groceries_app/screens/cart.dart';
 import 'package:flutter_groceries_app/screens/explore.dart';
 import 'package:flutter_groceries_app/screens/home.dart';
 import 'package:flutter_groceries_app/screens/login.dart';
@@ -45,7 +47,8 @@ class _MyWidgetState extends State<MyApp> {
         fontFamily: 'Roboto', // Đặt font mặc định
         primarySwatch: Colors.blue,
       ),
-      home: _isLoggedIn ? _buildMainApp() : _buildLoginScreen(),
+      // home: _isLoggedIn ? _buildMainApp() : _buildLoginScreen(),
+      home: _buildMainApp(),
     );
   }
 
@@ -53,7 +56,7 @@ class _MyWidgetState extends State<MyApp> {
     final pages = [
       BlocProvider(create: (_) => HomeCubit(), child: HomePage()),
       BlocProvider(create: (_) => ExploreCubit(), child: ExplorePage()),
-      Placeholder(),
+      BlocProvider(create: (_) => CartCubit(), child: CartPage()),
       Placeholder(),
       ProfilePage(),
     ];
