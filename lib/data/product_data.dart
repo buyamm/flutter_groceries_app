@@ -25,7 +25,7 @@ final List<Map<String, dynamic>> allOfProducts = [
     "price": 3.49,
     "unit": "1kg, Prices",
     "category": "Cooking Oil & Ghee",
-    "image": "lib/assets/images/banana.png",
+    "image": "lib/assets/images/cereal.png",
   },
   {
     "name": "Red Apple2",

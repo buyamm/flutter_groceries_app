@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_groceries_app/cubit/cart_cubit.dart';
+import 'package:flutter_groceries_app/cubit/cart_item_cubit.dart';
 import 'package:flutter_groceries_app/cubit/explore_cubit.dart';
 import 'package:flutter_groceries_app/cubit/home_cubit.dart';
 import 'package:flutter_groceries_app/cubit/login_cubit.dart';
@@ -56,7 +57,13 @@ class _MyWidgetState extends State<MyApp> {
     final pages = [
       BlocProvider(create: (_) => HomeCubit(), child: HomePage()),
       BlocProvider(create: (_) => ExploreCubit(), child: ExplorePage()),
-      BlocProvider(create: (_) => CartCubit(), child: CartPage()),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => CartCubit()),
+          BlocProvider(create: (_) => CartItemCubit()),
+        ],
+        child: CartPage(),
+      ),
       Placeholder(),
       ProfilePage(),
     ];

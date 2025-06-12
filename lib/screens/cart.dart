@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_groceries_app/cubit/cart_cubit.dart';
+import 'package:flutter_groceries_app/cubit/cart_item_cubit.dart';
 import 'package:flutter_groceries_app/models/grocery_category.dart';
+import 'package:flutter_groceries_app/states/cart_item_state.dart';
 import 'package:flutter_groceries_app/states/cart_state.dart';
+import 'package:flutter_groceries_app/widgets/cart_item.dart';
 import 'package:flutter_groceries_app/widgets/detail_information_item.dart';
 import 'package:flutter_groceries_app/widgets/food_type_item.dart';
 import 'package:flutter_groceries_app/widgets/select_item_drop_menu.dart';
@@ -16,10 +19,15 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  bool _isInit = false;
+
   @override
-  void initState() {
-    super.initState();
-    context.read<CartCubit>().loadFoodTypes();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInit) {
+      context.read<CartCubit>().loadFoodTypes();
+      _isInit = true;
+    }
   }
 
   @override
@@ -40,6 +48,7 @@ class _CartPageState extends State<CartPage> {
       body: Container(
         margin: EdgeInsetsDirectional.symmetric(horizontal: 14, vertical: 10),
         child: Column(
+          spacing: 20,
           children: [
             BlocBuilder<CartCubit, CartState>(
               builder:
@@ -130,10 +139,71 @@ class _CartPageState extends State<CartPage> {
                           nameCategory: state.selectedFoodType,
                           detailInformation: state.detailInformation,
                         ),
-                        SelectItemDropMenu(foodItems: state.foodItems),
+                        SelectItemDropMenu(
+                          nameCategory: state.selectedFoodType,
+                          foodItems: state.foodItems,
+                        ),
                       ],
                     ],
                   ),
+            ),
+
+            // 🔻 Phần scroll
+            Expanded(
+              child: BlocListener<CartItemCubit, CartItemState>(
+                listener: (context, state) {
+                  if (state.errorAlert.isNotEmpty) {
+                    ScaffoldMessenger.of(
+                      context,
+                    ).showSnackBar(SnackBar(content: Text(state.errorAlert)));
+                  }
+                },
+                child: BlocBuilder<CartItemCubit, CartItemState>(
+                  builder: (context, state) {
+                    final groupedItems = state.groupedItems;
+
+                    return ListView(
+                      padding: EdgeInsets.zero,
+                      children:
+                          groupedItems.entries.map((entry) {
+                            final category = entry.key;
+                            final productList = entry.value;
+
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Chỉ hiện 1 lần mỗi category
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4),
+                                  child: Text(
+                                    category,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+
+                                ...productList.map((pair) {
+                                  final product = pair.$1;
+                                  final count = pair.$2;
+
+                                  return Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: CartItem(
+                                      product: product,
+                                      category: category,
+                                      count: count,
+                                    ),
+                                  );
+                                }),
+                              ],
+                            );
+                          }).toList(),
+                    );
+                  },
+                ),
+              ),
             ),
           ],
         ),

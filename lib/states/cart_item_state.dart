@@ -1,21 +1,29 @@
 import 'package:flutter_groceries_app/models/product.dart';
 
 class CartItemState {
-  final List<Map<String, Product>> items; // Map <TenLoai, THongTinItem>
-  final List<Map<String, int>>
-  itemCount; // Map<TenItem, SoLuongItem trong gio hang>
+  // Map<String, List<(Product, int)>> groupedItems = {
+  //   "Fruits": [
+  //     (Product(name: "Apple", unit: "kg", image: "assets/images/apple.png"), 2),
+  //     (Product(name: "Banana", unit: "bunch", image: "assets/images/banana.png"), 1),
+  //   ],
+  //   "Vegetables": [
+  //     (Product(name: "Broccoli", unit: "piece", image: "assets/images/broccoli.png"), 3),
+  //   ],
+  // };
+  final Map<String, List<(Product, int)>> groupedItems;
+  final String errorAlert;
 
-  CartItemState({required this.items, required this.itemCount});
+  CartItemState({required this.groupedItems, this.errorAlert = ''});
 
-  factory CartItemState.initial() => CartItemState(items: [], itemCount: []);
+  factory CartItemState.initial() => CartItemState(groupedItems: {});
 
   CartItemState copyWith({
-    List<Map<String, Product>>? items, // Map <TenLoai, THongTinItem>
-    List<Map<String, int>>? itemCount,
+    Map<String, List<(Product, int)>>? groupedItems,
+    String? errorAlert,
   }) {
     return CartItemState(
-      items: items ?? this.items,
-      itemCount: itemCount ?? this.itemCount,
+      groupedItems: groupedItems ?? this.groupedItems,
+      errorAlert: errorAlert ?? this.errorAlert,
     );
   }
 }

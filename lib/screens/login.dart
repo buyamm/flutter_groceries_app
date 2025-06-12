@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_groceries_app/cubit/login_cubit.dart';
 import 'package:flutter_groceries_app/states/login_state.dart';
-import 'package:flutter_groceries_app/screens/home.dart';
-import 'package:flutter_groceries_app/screens/product_detail.dart';
+
 import 'package:flutter_groceries_app/screens/sign_up.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,9 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   bool showPassword = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  var _emailInvalid = false;
-  var _passwordInvalid = false;
 
   @override
   Widget build(BuildContext context) {

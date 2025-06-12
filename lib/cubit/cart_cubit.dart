@@ -36,8 +36,4 @@ class CartCubit extends Cubit<CartState> {
       ),
     );
   }
-
-  void isExpanded(bool isExpanded) {
-    emit(state.copyWith(isExpandedPanel: !isExpanded));
-  }
 }

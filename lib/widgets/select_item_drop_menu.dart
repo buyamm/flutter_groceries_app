@@ -1,13 +1,17 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_groceries_app/cubit/cart_cubit.dart';
+import 'package:flutter_groceries_app/cubit/cart_item_cubit.dart';
 import 'package:flutter_groceries_app/models/product.dart';
 import 'package:flutter_groceries_app/widgets/food_type_item.dart';
 
 class SelectItemDropMenu extends StatelessWidget {
-  const SelectItemDropMenu({super.key, required this.foodItems});
+  const SelectItemDropMenu({
+    super.key,
+    required this.foodItems,
+    required this.nameCategory,
+  });
+  final String nameCategory;
   final List<Product> foodItems;
 
   @override
@@ -35,20 +39,15 @@ class SelectItemDropMenu extends StatelessWidget {
                 .map(
                   (Product item) => DropdownMenuItem<Product>(
                     value: item,
-                    child: FoodTypeItem<Product>(
-                      item: item,
-                      onPressed: () {
-                        // context.read<CartCubit>().selectedFoodType(item);
-                      },
-                    ),
+                    child: FoodTypeItem<Product>(item: item, onPressed: () {}),
                   ),
                 )
                 .toList(),
         // value: selectedValue,
         onChanged: (Product? value) {
-          // setState(() {
-          //   selectedValue = value;
-          // });
+          if (value != null) {
+            context.read<CartItemCubit>().addToCart(nameCategory, value);
+          }
         },
         buttonStyleData: ButtonStyleData(
           height: 53,
