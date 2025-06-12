@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_groceries_app/models/grocery_category.dart';
+import 'package:flutter_groceries_app/models/product.dart';
 import 'package:flutter_groceries_app/screens/product_detail.dart';
 
 class ProductCategory extends StatelessWidget {
   final String title;
-  final List<Map<String, dynamic>> products;
+  final List<Product> products;
   final bool haveSubCard;
-  final List<Map<String, dynamic>>? typeOfCategory;
+  final List<GroceryCategory>? typeOfCategory;
 
   const ProductCategory({
     super.key,
@@ -60,7 +62,7 @@ class ProductCategory extends StatelessWidget {
                           0.7, // 70% chiều rộng màn hình
                       padding: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Color(product['bgColor']),
+                        color: Color(product.bgColor),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Row(
@@ -68,12 +70,12 @@ class ProductCategory extends StatelessWidget {
                           SizedBox(
                             width: 72,
                             height: 72,
-                            child: Image.asset(product["image"].toString()),
+                            child: Image.asset(product.image.toString()),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0),
                             child: Text(
-                              product['name'],
+                              product.name,
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -101,7 +103,8 @@ class ProductCategory extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProductDetail(),
+                            builder:
+                                (context) => ProductDetail(product: product),
                           ),
                         ),
                       },
@@ -124,13 +127,13 @@ class ProductCategory extends StatelessWidget {
                             child: SizedBox(
                               width: 90,
                               height: 80,
-                              child: Image.asset(product["image"]),
+                              child: Image.asset(product.image),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 2.0, top: 4),
                             child: Text(
-                              product["name"],
+                              product.name,
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -139,7 +142,7 @@ class ProductCategory extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            product["unit"],
+                            product.unit,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -151,7 +154,7 @@ class ProductCategory extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "\$${product["price"].toStringAsFixed(2)}",
+                                "\$${product.price.toStringAsFixed(2)}",
                                 style: const TextStyle(
                                   fontSize: 24,
                                   color: Colors.black,
