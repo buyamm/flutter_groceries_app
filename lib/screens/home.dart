@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_groceries_app/cubit/home_cubit.dart';
-import 'package:flutter_groceries_app/data/product_data.dart';
 import 'package:flutter_groceries_app/states/home_state.dart';
 import 'package:flutter_groceries_app/widgets/product_card.dart';
 import 'package:flutter_groceries_app/widgets/search_bar.dart';

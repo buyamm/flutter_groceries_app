@@ -1,7 +1,9 @@
-import 'dart:ffi';
-
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_groceries_app/models/login_request.dart';
+import 'package:flutter_groceries_app/models/login_response.dart';
 import 'package:flutter_groceries_app/states/login_state.dart';
+import 'package:flutter_groceries_app/storage/storage.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit()
@@ -15,6 +17,8 @@ class LoginCubit extends Cubit<LoginState> {
         ),
       );
 
+  final dio = Dio();
+
   bool isEmailValid(String email) {
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
     return emailRegExp.hasMatch(email);
@@ -23,10 +27,6 @@ class LoginCubit extends Cubit<LoginState> {
   bool isPasswordValid(String password) {
     return password.length >= 6;
   }
-
-  // bool isFormValid(String email, String password) {
-  //   return isEmailValid(email) && isPasswordValid(password);
-  // }
 
   void onEmailChanged(String email) {
     final checkEmailValid = isEmailValid(email);
@@ -51,13 +51,33 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  void login(String email, String password) async {
+  Future<void> login(String email, String password) async {
     emit(state.copyWith(loading: true));
-    await Future.delayed(Duration(seconds: 3));
+    // await Future.delayed(Duration(seconds: 3));
 
-    if (email == "admin@gmail.com" && password == "123456") {
-      emit(state.copyWith(loginStatus: LoginStatus.success, loading: false));
-    } else {
+    // if (email == "admin@gmail.com" && password == "123456") {
+    //   emit(state.copyWith(loginStatus: LoginStatus.success, loading: false));
+    // } else {
+    //   emit(state.copyWith(loginStatus: LoginStatus.failure, loading: false));
+    // }
+
+    try {
+      final loginData = LoginRequest(email: email, password: password).toJson();
+      print("Login data: $loginData");
+      final response = await dio.post(
+        "https://us-central1-skin-scanner-3c419.cloudfunctions.net/api/auth-service/login",
+        data: loginData,
+      );
+
+      if (response.statusCode == 200) {
+        LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+        await Storage.saveToken(loginResponse.accessToken);
+        emit(state.copyWith(loginStatus: LoginStatus.success, loading: false));
+      } else {
+        emit(state.copyWith(loginStatus: LoginStatus.failure, loading: false));
+      }
+    } catch (e) {
+      print(e);
       emit(state.copyWith(loginStatus: LoginStatus.failure, loading: false));
     }
   }
