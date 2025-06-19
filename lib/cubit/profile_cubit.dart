@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_groceries_app/constants/api/api_constants.dart';
 import 'package:flutter_groceries_app/models/profile/profile_response.dart';
+import 'package:flutter_groceries_app/screens/home.dart';
+import 'package:flutter_groceries_app/screens/login.dart';
 import 'package:flutter_groceries_app/states/profile_state.dart';
 import 'package:flutter_groceries_app/storage/storage.dart';
 
@@ -15,13 +17,14 @@ class ProfileCubit extends Cubit<ProfileState> {
           errorMessage: "",
           profilePic: "",
           isLoading: false,
+          isLoggingOut: false,
         ),
       );
   final dio = Dio();
 
   void getUserInfo() async {
+    emit(state.copyWith(isLoading: true)); // bật loading
     try {
-      emit(state.copyWith(isLoading: true)); // bật loading
       String accessToken = await Storage.getToken() as String;
       final response = await dio.get(
         ApiConstants.getUserInfo,
@@ -53,6 +56,36 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(
         state.copyWith(errorMessage: "Error when call API", isLoading: false),
       );
+    }
+  }
+
+  void logout(BuildContext context) async {
+    emit(state.copyWith(isLoggingOut: true)); // bật loading
+
+    try {
+      String accessToken = await Storage.getToken() as String;
+      await Storage.removeToken(accessToken);
+
+      emit(state.copyWith(isLoggingOut: false)); // tắt loading
+
+      // chuyển hướng về LoginPage
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder:
+              (_) => LoginPage(
+                onLoginSuccess: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (_) => const HomePage()),
+                    (route) => false,
+                  );
+                },
+              ),
+        ),
+        (route) => false,
+      );
+    } catch (e) {
+      debugPrint("Logout error: $e");
+      emit(state.copyWith(isLoggingOut: false));
     }
   }
 }

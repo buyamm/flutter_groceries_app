@@ -23,67 +23,77 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            SafeArea(child: _ProfileCard()),
-            Expanded(
-              child: ListView.builder(
-                itemCount: profileSettingUIData.length,
-                itemBuilder: (context, index) {
-                  final setting = profileSettingUIData[index];
-                  return Column(
-                    children: [
-                      if (index != 0)
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          child: Divider(color: Colors.black12, thickness: 1),
-                        ),
-                      ProfileSettingUICard(
-                        iconData: setting['icon'],
-                        title: setting['title'],
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-            MyElevatedButton(
-              name: "Delete",
-              bgColor: 0xff53B175,
-              foreColor: 0xffFFF9FF,
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xffF2F3F2),
-                  foregroundColor: Color(0xff53B175),
-                  fixedSize: Size(364, 67),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
+      body: BlocBuilder<ProfileCubit, ProfileState>(
+        builder:
+            (context, state) => Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SafeArea(child: _ProfileCard()),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: profileSettingUIData.length,
+                      itemBuilder: (context, index) {
+                        final setting = profileSettingUIData[index];
+                        return Column(
+                          children: [
+                            if (index != 0)
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Divider(
+                                  color: Colors.black12,
+                                  thickness: 1,
+                                ),
+                              ),
+                            ProfileSettingUICard(
+                              iconData: setting['icon'],
+                              title: setting['title'],
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.logout_rounded, size: 24),
-                    Text(
-                      "Log Out",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
+                  MyElevatedButton(
+                    name: "Delete",
+                    bgColor: 0xff53B175,
+                    foreColor: 0xffFFF9FF,
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.read<ProfileCubit>().logout(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xffF2F3F2),
+                        foregroundColor: Color(0xff53B175),
+                        fixedSize: Size(364, 67),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          state.isLoggingOut
+                              ? CircularProgressIndicator()
+                              : Icon(Icons.logout_rounded, size: 24),
+                          Text(
+                            "Log Out",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
       ),
     );
   }

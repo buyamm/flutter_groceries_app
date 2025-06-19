@@ -4,6 +4,7 @@ class ProfileState {
   final String errorMessage;
   final String profilePic;
   final bool isLoading;
+  final bool isLoggingOut;
 
   ProfileState({
     required this.displayName,
@@ -11,6 +12,7 @@ class ProfileState {
     required this.errorMessage,
     required this.profilePic,
     required this.isLoading,
+    required this.isLoggingOut,
   });
 
   ProfileState copyWith({
@@ -19,6 +21,7 @@ class ProfileState {
     String? errorMessage,
     String? profilePic,
     bool? isLoading,
+    bool? isLoggingOut,
   }) {
     return ProfileState(
       displayName: displayName ?? this.displayName,
@@ -26,6 +29,7 @@ class ProfileState {
       errorMessage: errorMessage ?? this.errorMessage,
       profilePic: profilePic ?? this.profilePic,
       isLoading: isLoading ?? this.isLoading,
+      isLoggingOut: isLoggingOut ?? this.isLoggingOut,
     );
   }
 }

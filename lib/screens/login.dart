@@ -9,7 +9,7 @@ import 'package:flutter_groceries_app/screens/sign_up.dart';
 class LoginPage extends StatefulWidget {
   final VoidCallback onLoginSuccess;
 
-  const LoginPage({super.key, required this.onLoginSuccess});
+  LoginPage({super.key, required this.onLoginSuccess});
 
   @override
   State<LoginPage> createState() => _LoginPageState();

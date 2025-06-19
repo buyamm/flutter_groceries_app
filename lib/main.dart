@@ -6,6 +6,7 @@ import 'package:flutter_groceries_app/cubit/explore_cubit.dart';
 import 'package:flutter_groceries_app/cubit/home_cubit.dart';
 import 'package:flutter_groceries_app/cubit/login_cubit.dart';
 import 'package:flutter_groceries_app/cubit/profile_cubit.dart';
+import 'package:flutter_groceries_app/cubit/signup_cubit.dart';
 import 'package:flutter_groceries_app/screens/cart.dart';
 import 'package:flutter_groceries_app/screens/explore.dart';
 import 'package:flutter_groceries_app/screens/home.dart';
@@ -14,7 +15,25 @@ import 'package:flutter_groceries_app/screens/profile.dart';
 import 'package:flutter_groceries_app/widgets/bottom_bar.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => LoginCubit()),
+        BlocProvider(create: (_) => SignupCubit()),
+        BlocProvider(create: (_) => HomeCubit(), child: HomePage()),
+        BlocProvider(create: (_) => ExploreCubit(), child: ExplorePage()),
+        MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => CartCubit()),
+            BlocProvider(create: (_) => CartItemCubit()),
+          ],
+          child: CartPage(),
+        ),
+        BlocProvider(create: (_) => ProfileCubit(), child: ProfilePage()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -49,23 +68,16 @@ class _MyWidgetState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: _isLoggedIn ? _buildMainApp() : _buildLoginScreen(),
-      // home: _buildMainApp(),
     );
   }
 
   Widget _buildMainApp() {
     final pages = [
-      BlocProvider(create: (_) => HomeCubit(), child: HomePage()),
-      BlocProvider(create: (_) => ExploreCubit(), child: ExplorePage()),
-      MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (_) => CartCubit()),
-          BlocProvider(create: (_) => CartItemCubit()),
-        ],
-        child: CartPage(),
-      ),
+      HomePage(),
+      ExplorePage(),
+      CartPage(),
       Placeholder(),
-      BlocProvider(create: (_) => ProfileCubit(), child: ProfilePage()),
+      ProfilePage(),
     ];
 
     return Scaffold(
