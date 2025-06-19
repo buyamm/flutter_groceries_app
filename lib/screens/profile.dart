@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_groceries_app/cubit/profile_cubit.dart';
 import 'package:flutter_groceries_app/data/profile_settingUI_data.dart';
+import 'package:flutter_groceries_app/states/profile_state.dart';
 import 'package:flutter_groceries_app/widgets/elevated_button.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -10,6 +14,12 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProfileCubit>().getUserInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,9 +67,18 @@ class _ProfilePageState extends State<ProfilePage> {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                 ),
-                child: Text(
-                  "Log Out",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.logout_rounded, size: 24),
+                    Text(
+                      "Log Out",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -75,49 +94,75 @@ class _ProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.blueGrey,
-            ),
-            // padding: EdgeInsets.all(12),
-            width: 64,
-            height: 64,
-            child: ClipOval(
-              child: Image.asset(
-                'lib/assets/images/22IT169.jpg',
-                fit: BoxFit.cover,
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return Center(child: CircularProgressIndicator());
+        } else {
+          if (state.errorMessage.isNotEmpty) {
+            return Center(
+              child: Text(
+                state.errorMessage!,
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
               ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Liam Truong",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+            );
+          }
+        }
+
+        return Container(
+          margin: EdgeInsets.only(bottom: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blueGrey,
                 ),
-                Text(
-                  "truongcongly139@gmail.com",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black54,
-                  ),
+                // padding: EdgeInsets.all(12),
+                width: 64,
+                height: 64,
+                child: ClipOval(
+                  child: Image.network(state.profilePic),
+                  // child: Image.asset(
+                  //    'lib/assets/images/22IT169.jpg',
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
-              ],
-            ),
+              ),
+              Container(
+                margin: EdgeInsets.only(left: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      state.displayName,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    Text(
+                      state.email,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

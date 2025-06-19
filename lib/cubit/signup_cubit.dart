@@ -149,7 +149,6 @@ class SignupCubit extends Cubit<SignupState> {
             password: password,
           ).toJson();
       final response = await dio.post(ApiConstants.register, data: signUpData);
-      debugPrint("response.data: ${response.data}");
       debugPrint("response.data: ${response.data['message']}");
       SignupResponse signupResponse = SignupResponse.fromJson(response.data);
 

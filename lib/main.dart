@@ -5,6 +5,7 @@ import 'package:flutter_groceries_app/cubit/cart_item_cubit.dart';
 import 'package:flutter_groceries_app/cubit/explore_cubit.dart';
 import 'package:flutter_groceries_app/cubit/home_cubit.dart';
 import 'package:flutter_groceries_app/cubit/login_cubit.dart';
+import 'package:flutter_groceries_app/cubit/profile_cubit.dart';
 import 'package:flutter_groceries_app/screens/cart.dart';
 import 'package:flutter_groceries_app/screens/explore.dart';
 import 'package:flutter_groceries_app/screens/home.dart';
@@ -64,7 +65,7 @@ class _MyWidgetState extends State<MyApp> {
         child: CartPage(),
       ),
       Placeholder(),
-      ProfilePage(),
+      BlocProvider(create: (_) => ProfileCubit(), child: ProfilePage()),
     ];
 
     return Scaffold(

@@ -22,7 +22,7 @@ Vấn đề: async mà không trả Future
     prefs.setString('access_token', token);
   }
 
-  static Future<String?> getToken(String token) async {
+  static Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('access_token');
   }
