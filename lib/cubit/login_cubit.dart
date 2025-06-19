@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_groceries_app/models/login_request.dart';
-import 'package:flutter_groceries_app/models/login_response.dart';
+import 'package:flutter_groceries_app/constants/api/api_constants.dart';
+import 'package:flutter_groceries_app/models/login/login_request.dart';
+import 'package:flutter_groceries_app/models/login/login_response.dart';
 import 'package:flutter_groceries_app/states/login_state.dart';
 import 'package:flutter_groceries_app/storage/storage.dart';
 
@@ -63,11 +64,7 @@ class LoginCubit extends Cubit<LoginState> {
 
     try {
       final loginData = LoginRequest(email: email, password: password).toJson();
-      print("Login data: $loginData");
-      final response = await dio.post(
-        "https://us-central1-skin-scanner-3c419.cloudfunctions.net/api/auth-service/login",
-        data: loginData,
-      );
+      final response = await dio.post(ApiConstants.login, data: loginData);
 
       if (response.statusCode == 200) {
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
@@ -77,7 +74,6 @@ class LoginCubit extends Cubit<LoginState> {
         emit(state.copyWith(loginStatus: LoginStatus.failure, loading: false));
       }
     } catch (e) {
-      print(e);
       emit(state.copyWith(loginStatus: LoginStatus.failure, loading: false));
     }
   }
