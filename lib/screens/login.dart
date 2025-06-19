@@ -1,3 +1,4 @@
+import 'package:auto_hide_keyboard/auto_hide_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_groceries_app/cubit/login_cubit.dart';
@@ -22,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocListener<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.loginStatus == LoginStatus.failure) {
@@ -89,30 +91,32 @@ class _LoginPageState extends State<LoginPage> {
                       ),
 
                       // Email text field
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 40),
-                        child: TextField(
-                          controller: _emailController,
-                          onChanged:
-                              (value) => context
-                                  .read<LoginCubit>()
-                                  .onEmailChanged(value),
-                          decoration: InputDecoration(
-                            labelText: "Email",
-                            errorText:
-                                state.emailError.isEmpty
-                                    ? null
-                                    : state.emailError,
-                            labelStyle: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
+                      AutoHideKeyboard(
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 40),
+                          child: TextField(
+                            controller: _emailController,
+                            onChanged:
+                                (value) => context
+                                    .read<LoginCubit>()
+                                    .onEmailChanged(value),
+                            decoration: InputDecoration(
+                              labelText: "Email",
+                              errorText:
+                                  state.emailError.isEmpty
+                                      ? null
+                                      : state.emailError,
+                              labelStyle: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                          ),
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                       ),

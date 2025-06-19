@@ -1,3 +1,4 @@
+import 'package:auto_hide_keyboard/auto_hide_keyboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_groceries_app/cubit/signup_cubit.dart';
@@ -88,36 +89,38 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
 
                     // Firstname
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: BlocBuilder<SignupCubit, SignupState>(
-                        builder:
-                            (context, state) => TextField(
-                              controller: _firstNameController,
-                              onChanged:
-                                  (value) => context
-                                      .read<SignupCubit>()
-                                      .onFirstNameChanged(value),
-                              style: TextStyle(
-                                height: 2,
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w100,
-                              ),
-                              decoration: InputDecoration(
-                                labelText: 'First Name',
-                                errorText:
-                                    state.firstNameError.isEmpty
-                                        ? null
-                                        : state.firstNameError,
-                                labelStyle: TextStyle(
+                    AutoHideKeyboard(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: BlocBuilder<SignupCubit, SignupState>(
+                          builder:
+                              (context, state) => TextField(
+                                controller: _firstNameController,
+                                onChanged:
+                                    (value) => context
+                                        .read<SignupCubit>()
+                                        .onFirstNameChanged(value),
+                                style: TextStyle(
                                   height: 2,
-                                  color: Colors.black54,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w100,
+                                ),
+                                decoration: InputDecoration(
+                                  labelText: 'First Name',
+                                  errorText:
+                                      state.firstNameError.isEmpty
+                                          ? null
+                                          : state.firstNameError,
+                                  labelStyle: TextStyle(
+                                    height: 2,
+                                    color: Colors.black54,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
-                            ),
+                        ),
                       ),
                     ),
 
