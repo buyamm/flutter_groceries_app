@@ -1,0 +1,75 @@
+lib/
+├── core/             ← Logic dùng chung: constants, utils, themes...
+├── data/             ← Lớp truy xuất dữ liệu (API, local storage...)
+├── domain/           ← Business logic: Entities, UseCases, Repositories (abstraction)
+├── presentation/     ← UI + BLoC (cubit, state), chia theo feature
+├── main.dart
+
+✅ Gợi ý cấu trúc thư mục mới (refactored)
+lib/
+├── core/
+│   ├── constants/
+│   │   └── api_constants.dart
+│   ├── utils/
+│   ├── storage/
+│   │   └── storage.dart
+│   └── widgets/
+│       ├── bottom_bar.dart
+│       ├── elevated_button.dart
+│       ├── search_bar.dart
+│       └── ...
+│
+├── data/
+│   ├── models/
+│   │   ├── grocery_category.dart
+│   │   ├── product.dart
+│   │   ├── login/
+│   │   │   ├── login_request.dart
+│   │   │   └── login_response.dart
+│   │   ├── signup/
+│   │   └── profile/
+│   ├── sources/
+│   │   ├── remote/     ← gọi API, nếu có
+│   │   └── local/      ← dùng `storage.dart`, nếu có
+│   └── repositories/   ← implement Repository từ domain
+│       └── product_repository_impl.dart
+│
+├── domain/
+│   ├── entities/       ← định nghĩa các entity (core models không phụ thuộc UI hoặc API)
+│   ├── repositories/   ← abstract class (interface)
+│   └── usecases/       ← xử lý logic chính (lấy sản phẩm, login, signup, v.v.)
+│
+├── presentation/
+│   ├── features/
+│   │   ├── home/
+│   │   │   ├── cubit/
+│   │   │   │   ├── home_cubit.dart
+│   │   │   │   └── home_state.dart
+│   │   │   └── view/
+│   │   │       └── home_page.dart
+│   │   ├── explore/
+│   │   ├── cart/
+│   │   ├── login/
+│   │   ├── signup/
+│   │   ├── product_detail/
+│   │   └── profile/
+│   └── widgets/       ← các widget riêng cho UI màn hình (có thể chia theo feature)
+│
+├── assets/
+│   └── fonts/, images/
+│
+└── main.dart
+
+
+
+🔄 Mapping từ cấu trúc cũ sang mới
+| Thư mục cũ    | Chuyển sang                                  |
+| ------------- | -------------------------------------------- |
+| `cubit/`      | `presentation/features/<feature>/cubit/`     |
+| `states/`     | `presentation/features/<feature>/cubit/`     |
+| `screens/`    | `presentation/features/<feature>/pages/`     |
+| `models/`     | `data/models/` (có thể chia theo tính năng)  |
+| `data/*.dart` | `data/sources/` hoặc `data/repositories/`    |
+| `storage/`    | `core/storage/`                              |
+| `widgets/`    | `core/widgets/` hoặc `presentation/widgets/` |
+| `constants/`  | `core/constants/`                            |

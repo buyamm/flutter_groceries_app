@@ -1,0 +1,199 @@
+✅ Viết mẫu thư mục + cubit cho một feature (ví dụ: login)
+🧱 PHẦN 1: Tạo cấu trúc thư mục chuẩn Clean Architecture + BLoC
+Bạn có thể copy/paste vào thư mục lib/ của dự án:
+lib/
+├── core/
+│   ├── constants/
+│   ├── storage/
+│   └── widgets/
+│
+├── data/
+│   ├── models/
+│   │   ├── login/
+│   │   └── ...
+│   ├── repositories/
+│   └── sources/
+│       ├── remote/
+│       └── local/
+│
+├── domain/
+│   ├── entities/
+│   ├── repositories/
+│   └── usecases/
+│
+├── presentation/
+│   ├── features/
+│   │   ├── login/
+│   │   │   ├── cubit/
+│   │   │   │   ├── login_cubit.dart
+│   │   │   │   └── login_state.dart
+│   │   │   └── view/
+│   │   │       └── login_page.dart
+│   └── widgets/
+│
+├── assets/
+│   ├── fonts/
+│   └── images/
+│
+└── main.dart
+
+
+===============================================================================================
+🧩 PHẦN 2: Mẫu tính năng Login Feature dùng BLoC + Clean Architecture
+🗂 Cấu trúc chi tiết login
+lib/
+├── domain/
+│   ├── entities/
+│   │   └── user.dart
+│   ├── repositories/
+│   │   └── auth_repository.dart
+│   └── usecases/
+│       └── login_usecase.dart
+│
+├── data/
+│   ├── models/
+│   │   └── login/
+│   │       ├── login_request.dart
+│   │       └── login_response.dart
+│   └── repositories/
+│       └── auth_repository_impl.dart
+│
+├── presentation/
+│   └── features/
+│       └── login/
+│           ├── cubit/
+│           │   ├── login_cubit.dart
+│           │   └── login_state.dart
+│           └── pages/
+│               └── login_page.dart
+
+
+📄 Chi tiết các file mẫu
+1. auth_repository.dart – Interface:
+abstract class AuthRepository {
+  Future<bool> login(String username, String password);
+}
+
+
+2. login_usecase.dart – UseCase
+import '../repositories/auth_repository.dart';
+
+class LoginUseCase {
+  final AuthRepository repository;
+
+  LoginUseCase(this.repository);
+
+  Future<bool> execute(String username, String password) {
+    return repository.login(username, password);
+  }
+}
+
+
+3. auth_repository_impl.dart – Repository Implementation
+import '../../domain/repositories/auth_repository.dart';
+
+class AuthRepositoryImpl implements AuthRepository {
+  @override
+  Future<bool> login(String username, String password) async {
+    // TODO: gọi API thực tế
+    await Future.delayed(Duration(seconds: 1));
+    return username == 'admin' && password == 'admin';
+  }
+}
+
+
+4. login_cubit.dart
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'login_state.dart';
+import '../../../../domain/usecases/login_usecase.dart';
+
+class LoginCubit extends Cubit<LoginState> {
+  final LoginUseCase loginUseCase;
+
+  LoginCubit(this.loginUseCase) : super(LoginInitial());
+
+  Future<void> login(String username, String password) async {
+    emit(LoginLoading());
+    try {
+      final success = await loginUseCase.execute(username, password);
+      if (success) {
+        emit(LoginSuccess());
+      } else {
+        emit(LoginFailure("Sai thông tin đăng nhập"));
+      }
+    } catch (e) {
+      emit(LoginFailure("Đã có lỗi xảy ra"));
+    }
+  }
+}
+
+
+
+5. login_state.dart
+abstract class LoginState {}
+
+class LoginInitial extends LoginState {}
+
+class LoginLoading extends LoginState {}
+
+class LoginSuccess extends LoginState {}
+
+class LoginFailure extends LoginState {
+  final String message;
+  LoginFailure(this.message);
+}
+
+
+
+6. login_page.dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubit/login_cubit.dart';
+import '../cubit/login_state.dart';
+
+class LoginPage extends StatelessWidget {
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginFailure) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.message)));
+          }
+        },
+        builder: (context, state) {
+          if (state is LoginLoading) {
+            return Center(child: CircularProgressIndicator());
+          }
+          return Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextField(controller: usernameController),
+                TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    context.read<LoginCubit>().login(
+                          usernameController.text,
+                          passwordController.text,
+                        );
+                  },
+                  child: Text("Login"),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
