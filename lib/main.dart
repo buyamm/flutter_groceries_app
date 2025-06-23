@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_groceries_app/cubit/cart_cubit.dart';
-import 'package:flutter_groceries_app/cubit/cart_item_cubit.dart';
-import 'package:flutter_groceries_app/cubit/explore_cubit.dart';
-import 'package:flutter_groceries_app/cubit/home_cubit.dart';
-import 'package:flutter_groceries_app/cubit/login_cubit.dart';
-import 'package:flutter_groceries_app/cubit/profile_cubit.dart';
-import 'package:flutter_groceries_app/cubit/signup_cubit.dart';
-import 'package:flutter_groceries_app/screens/cart.dart';
-import 'package:flutter_groceries_app/screens/explore.dart';
-import 'package:flutter_groceries_app/screens/home.dart';
-import 'package:flutter_groceries_app/screens/login.dart';
-import 'package:flutter_groceries_app/screens/profile.dart';
-import 'package:flutter_groceries_app/widgets/bottom_bar.dart';
+import 'package:flutter_groceries_app/presentation/features/cart/cubit/cart_cubit.dart';
+import 'package:flutter_groceries_app/presentation/features/cart/cubit/cart_item_cubit.dart';
+import 'package:flutter_groceries_app/presentation/features/explore/cubit/explore_cubit.dart';
+import 'package:flutter_groceries_app/presentation/features/home/cubit/home_cubit.dart';
+import 'package:flutter_groceries_app/presentation/features/login/cubit/login_cubit.dart';
+import 'package:flutter_groceries_app/presentation/features/profile/cubit/profile_cubit.dart';
+import 'package:flutter_groceries_app/presentation/features/signup/cubit/signup_cubit.dart';
+import 'package:flutter_groceries_app/presentation/features/cart/view/cart.dart';
+import 'package:flutter_groceries_app/presentation/features/explore/view/explore.dart';
+import 'package:flutter_groceries_app/presentation/features/home/view/home.dart';
+import 'package:flutter_groceries_app/presentation/features/login/view/login.dart';
+import 'package:flutter_groceries_app/presentation/features/profile/view/profile.dart';
+import 'package:flutter_groceries_app/presentation/widgets/bottom_bar.dart';
 
 void main() {
   runApp(
