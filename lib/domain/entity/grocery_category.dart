@@ -10,7 +10,7 @@ class GroceryCategory implements HasImageAndName {
     required this.name,
     required this.bgColor,
     required this.image,
-    required this.detailInformation,
+    this.detailInformation = '', // default empty string
   });
 
   factory GroceryCategory.fromMap(Map<String, dynamic> map) {
@@ -18,7 +18,7 @@ class GroceryCategory implements HasImageAndName {
       name: map['name'],
       bgColor: map['bgColor'],
       image: map['image'],
-      detailInformation: map['detailInformation'],
+      detailInformation: map['detailInformation'] ?? '',
     );
   }
 }
